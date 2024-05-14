@@ -18,7 +18,7 @@ public class Filme extends Titulo implements Classificavel {
     }
 
     @Override
-    public int getClassificao() {
-        return 0;
+    public int getClassificacao() {
+        return (int) getSomarAvaliacoes() / 2;
     }
 }

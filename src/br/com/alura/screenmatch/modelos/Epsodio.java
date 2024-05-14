@@ -42,7 +42,7 @@ public class Epsodio implements Classificavel {
     }
 
     @Override
-    public int getClassificao() {
+    public int getClassificacao() {
        if (totalDeVizualizacoes > 100){
            return 4;
        }
