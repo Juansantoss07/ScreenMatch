@@ -1,6 +1,11 @@
 package br.com.alura.screenmatch.modelos;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serial;
+
 public class Titulo implements Comparable<Titulo> {
+
     private String nome;
     private int dataLancamento;
     private boolean incluidoNoPlano;
@@ -11,6 +16,12 @@ public class Titulo implements Comparable<Titulo> {
     public Titulo(String nome, int dataLancamento){
         this.setNome(nome);
         this.setDataLancamento(dataLancamento);
+    }
+
+    public Titulo(TituloOmdb tituloOmdb) {
+        this.nome = tituloOmdb.title();
+        this.dataLancamento = Integer.parseInt(tituloOmdb.year());
+        this.duracaoEmMinutos = Integer.parseInt(tituloOmdb.runtime().substring(0,3));
     }
 
     public double getSomarAvaliacoes(){
@@ -69,7 +80,11 @@ public class Titulo implements Comparable<Titulo> {
 
     @Override
     public String toString(){
-        String titulos = "Título: " + this.getNome() + " (" + this.getDataLancamento() + ")";
+        String titulos = "Título: " +
+                this.getNome() + " (" +
+                this.getDataLancamento() + ") " +
+                "Tempo de filme: " +
+                this.getDuracaoEmMinutos() + " min";
         return titulos;
     }
 
