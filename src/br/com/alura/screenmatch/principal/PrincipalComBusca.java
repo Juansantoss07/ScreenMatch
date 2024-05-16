@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch.principal;
 
+import br.com.alura.screenmatch.excecao.ErroDeConversaoDeAnoException;
 import br.com.alura.screenmatch.modelos.Filme;
 import br.com.alura.screenmatch.modelos.Titulo;
 import br.com.alura.screenmatch.modelos.TituloOmdb;
@@ -19,22 +20,35 @@ public class PrincipalComBusca {
         System.out.println("Digite o nome de um filme para ver suas informações:");
         Scanner scanner = new Scanner(System.in);
         var busca = scanner.nextLine();
-        var endereco = "https://www.omdbapi.com/?t=" + busca + "&apikey=7b19864c";
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(endereco))
-                .build();
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            var endereco = "https://www.omdbapi.com/?t=" + busca.replace(" ", "+") + "&apikey=7b19864c";
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(endereco))
+                    .build();
+            HttpResponse<String> response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
 
-        String json = response.body();
-        System.out.println(json);
+            String json = response.body();
+            System.out.println(json);
 
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
-        TituloOmdb tituloOmdb = gson.fromJson(json, TituloOmdb.class);
-        System.out.println(tituloOmdb);
+            Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
-        Titulo meuTitulo = new Titulo(tituloOmdb);
-        System.out.println(meuTitulo);
+            TituloOmdb tituloOmdb = gson.fromJson(json, TituloOmdb.class);
+            System.out.println(tituloOmdb);
+
+            if(tituloOmdb.year().length() > 4){
+                throw new ErroDeConversaoDeAnoException("" +
+                        "Não foi possível localizar o ano, pois o valor informado possui mais de 4 caracteres."
+                );
+            }
+
+            Titulo meuTitulo = new Titulo(tituloOmdb);
+            System.out.println(meuTitulo);
+        } catch (NumberFormatException e){
+            System.out.println("Opa... Teve um erro aqui: " + e.getMessage());
+        } catch (ErroDeConversaoDeAnoException e){
+            System.out.println(e.getMessage());
+        }
     }
 }
