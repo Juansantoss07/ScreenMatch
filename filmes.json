@@ -1,0 +1,26 @@
+ [
+  {
+    "Nome": "Top Gun",
+    "DataLancamento": 1986,
+    "IncluidoNoPlano": false,
+    "SomarAvaliacoes": 0.0,
+    "TotalDeAvaliacaoes": 0,
+    "DuracaoEmMinutos": 109
+  },
+  {
+    "Nome": "Titanic",
+    "DataLancamento": 1997,
+    "IncluidoNoPlano": false,
+    "SomarAvaliacoes": 0.0,
+    "TotalDeAvaliacaoes": 0,
+    "DuracaoEmMinutos": 194
+  },
+  {
+    "Nome": "Maverick",
+    "DataLancamento": 1994,
+    "IncluidoNoPlano": false,
+    "SomarAvaliacoes": 0.0,
+    "TotalDeAvaliacaoes": 0,
+    "DuracaoEmMinutos": 127
+  }
+]
